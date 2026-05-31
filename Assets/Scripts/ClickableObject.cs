@@ -26,15 +26,11 @@ public class ClickableObject : MonoBehaviour
     [Header("Step 5 - Door")]
     public float doorOpenAngle = 90f;
 
-    [Header("Audio")]
-    public AudioClip interactSound;
-
     // Highlight
     private Renderer objectRenderer;
     private Color originalColor;
     private bool isHighlighted = false;
     private bool isSolved = false;
-    private AudioSource audioSource;
 
     void Start()
     {
@@ -42,9 +38,6 @@ public class ClickableObject : MonoBehaviour
         if (objectRenderer != null)
             originalColor = objectRenderer.material.color;
 
-        audioSource = gameObject.AddComponent<AudioSource>();
-
-        // Hide UI panels at start
         if (riddlePanel != null) riddlePanel.SetActive(false);
         if (safePanel != null) safePanel.SetActive(false);
     }
@@ -75,9 +68,6 @@ public class ClickableObject : MonoBehaviour
         if (isSolved) return;
         if (!GameManager.Instance.CanAttempt(puzzleStep)) return;
 
-        if (interactSound != null)
-            audioSource.PlayOneShot(interactSound);
-
         switch (puzzleStep)
         {
             case 1: SolveLight(); break;
@@ -88,7 +78,6 @@ public class ClickableObject : MonoBehaviour
         }
     }
 
-    // --- Step 1: Turn on the light ---
     void SolveLight()
     {
         if (roomLight != null)
@@ -99,7 +88,6 @@ public class ClickableObject : MonoBehaviour
         GameManager.Instance.SolvePuzzle(1);
     }
 
-    // --- Step 2: Turn on computer screen ---
     void SolveComputer()
     {
         if (computerPanel != null)
@@ -110,7 +98,6 @@ public class ClickableObject : MonoBehaviour
         GameManager.Instance.SolvePuzzle(2);
     }
 
-    // --- Step 3: Open drawer and show riddle ---
     void SolveDrawer()
     {
         transform.position += drawerOpenOffset;
@@ -123,7 +110,6 @@ public class ClickableObject : MonoBehaviour
         GameManager.Instance.SolvePuzzle(3);
     }
 
-    // --- Step 4: Show safe input panel ---
     void OpenSafePanel()
     {
         if (safePanel != null)
@@ -134,7 +120,6 @@ public class ClickableObject : MonoBehaviour
         }
     }
 
-    // Call this from a UI button next to the input field
     public void CheckSafeAnswer()
     {
         if (safeInput == null) return;
@@ -156,7 +141,6 @@ public class ClickableObject : MonoBehaviour
         }
     }
 
-    // --- Step 5: Open the door ---
     void SolveDoor()
     {
         transform.Rotate(0f, doorOpenAngle, 0f);

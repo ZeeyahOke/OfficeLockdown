@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         timeRemaining = timeLimit;
-        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
         messageText.text = "";
         UpdateProgressUI();
     }
