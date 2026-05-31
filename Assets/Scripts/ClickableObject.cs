@@ -10,8 +10,7 @@ public class ClickableObject : MonoBehaviour
     public Light roomLight;
 
     [Header("Step 2 - Computer")]
-    public Material computerOnMaterial;
-    public Renderer computerScreen;
+    public GameObject computerPanel;
 
     [Header("Step 3 - Drawer")]
     public Vector3 drawerOpenOffset = new Vector3(0f, 0f, -0.3f);
@@ -103,8 +102,8 @@ public class ClickableObject : MonoBehaviour
     // --- Step 2: Turn on computer screen ---
     void SolveComputer()
     {
-        if (computerScreen != null && computerOnMaterial != null)
-            computerScreen.material = computerOnMaterial;
+        if (computerPanel != null)
+            computerPanel.SetActive(true);
 
         isSolved = true;
         RemoveHighlight();
